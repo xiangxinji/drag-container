@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{display: flex;justify-content:center;height:100vh;align-items:center;}
+        #drag-container{width:375px ; height:600px;position:relative;box-shadow: -1px 3px 8px #ccc;border-radius:0px;}
+        .block-test{position:absolute;left:0px;top:0px;cursor: pointer;width:90px;height:90px;background-color:skyblue;border-radius:0px;box-sizing: border-box;}
+    </style>
+</head>
+<body>
+<div id="drag-container">
+    <div class="block-test">1</div>
+    <div class="block-test">2</div>
+    <div class="block-test" style="height:70px;">3</div>
+    <div class="block-test">4</div>
+</div>
+</body>
+<script src="../dist/drag-container.js"></script>
+<script>
+    const container = DragContainer.start(document.getElementsByClassName('block-test'),{} , {
+        width :375 ,
+        height:600
+    })
+    container.plugin(DragContainer.EdgeDragPlugin)
+    container.plugin(DragContainer.AdsorbDragPlugin)
+    container.plugin(DragContainer.AlignmentDragPlugin)
+    container.addHook('Moving' , ({ target , instance }) => {
+        const { x , y } = instance
+        target.style.left = x + 'px'
+        target.style.top = y + 'px'
+    })
+    container.children[1].options.ignoreAlignment = true // 忽略上下对齐
+    console.log(container)
+</script>
+</html>
