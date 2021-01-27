@@ -14,6 +14,31 @@ npm i drag-container-helper
 yarn add drag-container-helper
 ```
 
+在安装之后需要自己处理要是, 这个库只负责将容器内的 element元素绑定拖拽事件, 不参与样式 所以需要自己编写样式
+
+如下 
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <style>
+        /* 让容器元素相对,并且设置宽高 , 并且设置子元素的绝对定位,并设置宽高 */
+        #container{width : 375px ; height:600px; position :relative;}
+        #container .inner-box-item{position :absolute; width:90px; height:90px ;}
+    </style>
+</head>
+<body>
+    <div id="container">
+        <!--   可拖拽的元素      -->
+        <div class="inner-box-item"></div>
+        <div class="inner-box-item"></div>
+        <div class="inner-box-item"></div>
+    </div>
+</body>
+</html>
+```
+
 injs 
 ```javascript
 const container = DragContainer.start(document.getElementsByClassName('block-test'),{} , {
@@ -22,7 +47,7 @@ const container = DragContainer.start(document.getElementsByClassName('block-tes
 }) 
 // container.plugin(DragContainer.EdgeDragPlugin)
 // container.plugin(DragContainer.AdsorbDragPlugin)
-container.addHook('MOVING' , ({ target , instance }) => {
+container.addHook('Moving' , ({ target , instance }) => {
     const { x , y } = instance
     target.style.left = x + 'px'
     target.style.top = y + 'px'
@@ -75,9 +100,17 @@ apply 方法的 api
 
 在构造方法中会传递给你用户传递的options , 你可以自由的进行配置 并且对于apply 参数你可以直接获取到 container  
 ```javascript
-apply( container ) {
-    // .... 
+class CustomerDragPlugin {
+    constructor (options) {
+        this.options = options 
+    }
+    apply( container ) {
+        // .... 
+    }
 }
+container.plugin(CustomerDragPlugin , {
+    // 这个options  会传递给 CustomerDragPlugin 的构造方法中 
+})
 ```
 
 ## Hooks 
@@ -93,14 +126,15 @@ apply( container ) {
 
 ```javascript
 const container = new DragContainer() //. .
-container.addHook('MOVING' , ({ instance, target , x , y }) => {
+container.addHook('Moving' , ({ instance, target , x , y }) => {
     target.style.left = x + 'px'
     target.style.top = y + 'px'
 })
 ```
 
 
-
+## 实例
+[具体实例](./examples/index.html)
 
 
 

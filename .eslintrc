@@ -1,4 +1,13 @@
 {
   "root": true ,
-  "extends": "sinfe"
+  "extends": "sinfe",
+  "parser": "babel-eslint",
+  "env": {
+    "es6": true,
+    "commonjs": true
+  },
+  "rules": {
+    "no-useless-call" : 0 ,
+    "class-methods-use-this" : 0
+  }
 }
