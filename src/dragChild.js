@@ -6,7 +6,7 @@ export default class DragChild {
     this.y = y
     this.w = 0
     this.h = 0
-    this.options = options
+    this.options = {...options,}
     this.container = null
     this.id = null
     this.initState();

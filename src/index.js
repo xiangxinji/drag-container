@@ -2,6 +2,7 @@ import DragContainer from './dragContainer'
 import DragChild from './dragChild'
 import EdgeDragPlugin from "../plugins/edge";
 import AdsorbDragPlugin from "../plugins/adsorb";
+import AlignmentDragPlugin from "../plugins/alignment";
 import Hooks from '../src/hooks'
 
 
@@ -30,6 +31,7 @@ export default {
   DragChild,
   EdgeDragPlugin,
   AdsorbDragPlugin,
+  AlignmentDragPlugin,
   Hooks,
 }
 

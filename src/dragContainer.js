@@ -82,6 +82,9 @@ export default class DragContainer {
   }
 
   addHook(hookName,handler) {
+    if (typeof hookName === 'function') {
+      hookName = hookName.name
+    }
     let success = true
     if (!DragContainer.HOOKS[hookName]) {
       console.error('未包含这个hook')
@@ -107,6 +110,9 @@ export default class DragContainer {
   }
 
   removeHook(hookName,handler) {
+    if (typeof hookName === 'function') {
+      hookName = hookName.name
+    }
     let success = true
     if (!DragContainer.HOOKS[hookName]) {
       console.error('未包含这个hook')

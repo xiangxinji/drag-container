@@ -58,7 +58,7 @@ container.addHook('Moving' , ({ target , instance }) => {
 以上被注释的两行是属于自带的plugin
 1. Edge 不允许拖拽的元素超过 container 大小
 2. Adsorb 拖拽的元素会被吸附到其他元素上面去 
-
+3. Alignment 进行自动上下对齐, 可以在 DragChild 的options 中 ignoreAlignment = true , 则表示这个元素不需要对齐
 
 ## api
 DragContainer.start 一个快速开始的方法 

@@ -4,7 +4,7 @@ export default class EdgeDragPlugin {
   }
 
   apply(container) {
-    container.addHook('MOVING',({instance,}) => {
+    container.addHook('Moving',({instance,}) => {
       let {w,h,x,y,} = instance
       if (x < 0) x = 0
       if (y < 0) y = 0
