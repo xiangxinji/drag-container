@@ -87,11 +87,11 @@ DragChild 一个代表被拖拽元素的类
 3. setContainer 如果当前的这个child实例并没有绑定 container , 请进行手动绑定 (如果是在container 中 addChild 了, 那么这个关系是自动绑定上去了)
 
 ## 关于插件 
-本库中自带两个插件 , 一个的 Edge 边缘 , 一个是自动吸附 
+本库中自带三个插件 , 一个的 Edge 边缘 , 一个是自动吸附 , 一个上下两端对齐 
 
 如果编写一个自定义插件, 请遵循以下规则 
 1. 他只能跟容器绑定关系 
-2. 他是一个类, 并且需要拥有 name 属性和 apply 方法  
+2. 他是一个类, 并且需要拥有 name 属性和 apply 方法 (class 自带 name 属性)
 3. 他需要手动被 container.plugin 进行注册 , 注册之后会自动调用 apply , 你可以在那里面进行 addHook 订阅不同的钩子函数
 
 apply 方法的 api  
@@ -135,6 +135,84 @@ container.addHook('Moving' , ({ instance, target , x , y }) => {
 
 ## 实例
 [具体实例](./examples/index.html)
+
+
+
+## vue 组件化使用 
+
+在Vue中我们一般不像上面实例那样子去写js , 因为我们的dom是很少去直接控制的, 第二个就是这种方式本身就不符合组件化的规范
+所以这里我写一个 vue 应用的 demo (不考虑样式)
+
+大致如下 
+```vue
+<!-- container.vue 这个组件是一个容器, 他讲包含着 DragItem 组件 -->
+<template>
+  <div class="page-container" style="width:375px;height:800px;">
+    <drag-item v-for="(item , $index) in drags" :key="$index"></drag-item>
+  </div>
+</template>
+import { DragContainer } from 'drag-container-helper'
+import DragChild from './drag-child.vue'
+<script>
+export default {
+  components: { DragChild } ,
+  provider () {
+    return {
+      dragContainer : this    
+    }
+  },
+  data () {
+    return {
+      container : null,  
+      drags : [
+          // ... 
+      ]
+    }
+  },
+  created () {
+      this.container = new DragContainer({
+        width : 375 , height: 800 
+      })
+      // 在这步添加插件 
+      // 添加事件 
+      this.container.addHook('Moving' , ({ instance }) => {
+        const { x , y } = instance 
+          // 同步到 DragChild 组件的 Props 中
+          //或者是直接同步 instance.element.style.left = x + 'px' ;instance.element.style.top = y + 'px' 
+      })
+  }
+}
+</script>
+<style>
+/* ..... */
+</style>
+```
+```vue
+<!-- drag-child.vue 这个组件会被渲染到 container.vue 中 -->
+<template>
+  <div class="drag-ele"></div>
+</template>
+<script>
+import { DragChild } from 'drag-container-helper' 
+export default {
+  inject: ['dragContainer'] ,
+  methods: {
+    getDragContainer () {
+      return this.dragContainer && this.dragContainer.container 
+    }
+  },
+  mounted () {
+    const container = this.getDragContainer()
+    container.addChild(new DragChild(this['$el']))
+  }
+}
+</script>
+```
+
+
+可以看出来这个组件化的方式并不像通过start 的方法这么简单 , 需要自己维护Container和Child的关系 . 虽然也比较繁琐, 但是总的来说结构还算简单清晰 
+
+
 
 
 

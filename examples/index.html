@@ -5,22 +5,29 @@
     <title>Title</title>
     <style>
         body{display: flex;justify-content:center;height:100vh;align-items:center;}
-        #drag-container{width:375px ; height:600px;position:relative;box-shadow: -1px 3px 8px #ccc;border-radius:0px;}
-        .block-test{position:absolute;left:0px;top:0px;cursor: pointer;width:90px;height:90px;background-color:skyblue;border-radius:0px;box-sizing: border-box;}
+        #drag-container{width:575px ; height:600px;position:relative;box-shadow: -1px 3px 8px #ccc;border-radius:0px;}
+        .block-test{position:absolute;left:0px;top:0px;cursor: pointer;width:90px;height:90px;background-color:skyblue;border-radius:0px;box-sizing: border-box;line-height:90px;text-align:center;}
     </style>
 </head>
 <body>
 <div id="drag-container">
-    <div class="block-test">1</div>
-    <div class="block-test">2</div>
-    <div class="block-test" style="height:70px;">3</div>
-    <div class="block-test">4</div>
+    <div class="block-test"></div>
+    <div class="block-test"></div>
+    <div class="block-test" ></div>
+    <div class="block-test"></div>
+    <div class="block-test"></div>
+    <div class="block-test"></div>
+    <div class="block-test"></div>
+    <div class="block-test"></div>
+    <div class="block-test"></div>
+    <div class="block-test"></div>
+    <div class="block-test"></div>
 </div>
 </body>
 <script src="../dist/drag-container.js"></script>
 <script>
     const container = DragContainer.start(document.getElementsByClassName('block-test'),{} , {
-        width :375 ,
+        width :575 ,
         height:600
     })
     container.plugin(DragContainer.EdgeDragPlugin)
@@ -31,7 +38,5 @@
         target.style.left = x + 'px'
         target.style.top = y + 'px'
     })
-    container.children[1].options.ignoreAlignment = true // 忽略上下对齐
-    console.log(container)
 </script>
 </html>
